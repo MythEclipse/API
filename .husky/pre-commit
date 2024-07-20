@@ -1,7 +1,7 @@
 echo ' prepare-commit-msg hook'
 
-npm run check-format || {
-    echo 'Please run "npm run format" before committing' >&2
+npm run format || {
+    echo 'please fix format' >&2
     exit 1
 }
 
