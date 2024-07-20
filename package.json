@@ -9,14 +9,14 @@
     "build": "tsc",
     "dev": "npx nodemon",
     "format": "prettier --write .",
-    "prepare": "husky install",
+    "prepare": "husky",
     "check-types": "tsc --noEmit",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js --ext jsx"
   },
-  "husky" :{
-  "pre-commit": "npx pretty-quick --staged ng lint ng test",
-  "pre-push": "ng lint ng test"
+  "husky": {
+    "pre-commit": "npx pretty-quick --staged ng lint ng test",
+    "pre-push": "ng lint ng test"
   },
   "author": "",
   "license": "ISC",
