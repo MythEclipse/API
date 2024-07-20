@@ -9,6 +9,7 @@ node -v # should print `v22.5.1`
 
 # verifies the right NPM version is in the environment
 npm -v # should print `10.8.2`
-npm install -g yarn pnpm
+npm install -g pnpm
 # verifies the right Yarn version is in the environment
-yarn -v # should print `1.22.17`
+pnpm -v # should print `1.22.17`
+pnpm install
