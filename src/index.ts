@@ -22,6 +22,6 @@ app.use((req, res, next) => {
 
 routes(app)
 
-app.listen(port,() => {
+app.listen(port, () => {
   logger.info(`Server is running on port ${port}`)
 })
