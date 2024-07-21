@@ -12,28 +12,28 @@ export const createProduct = (req: Request, res: Response) => {
 }
 
 export const getProduct = (req: Request, res: Response) => {
-  const products =[
-    {name : 'sepatu',price: 2000000},
-    {name : 'baju',price: 1000000}
+  const products = [
+    { name: 'sepatu', price: 2000000 },
+    { name: 'baju', price: 1000000 }
   ]
   const {
     params: { name }
   } = req
 
-  if(name){
-    const filterProduct = products.filter((product)=>{
-     if (product.name === name){
-       return product
-     }
+  if (name) {
+    const filterProduct = products.filter((product) => {
+      if (product.name === name) {
+        return product
+      }
     })
-    if(filterProduct.length === 0){
+    if (filterProduct.length === 0) {
       logger.error('ERROR = product not found')
       return res.status(404).send({ status: false, statusCode: 404, message: 'Product not found', data: {} })
     }
     logger.info('success get product')
-  return res.status(200).send({ status: true, statusCode: 200, data:filterProduct })
+    return res.status(200).send({ status: true, statusCode: 200, data: filterProduct })
   }
 
   logger.info('success get product')
-  return res.status(200).send({ status: true, statusCode: 200, data:products })
+  return res.status(200).send({ status: true, statusCode: 200, data: products })
 }

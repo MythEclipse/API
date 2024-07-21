@@ -10,11 +10,11 @@ const port: number = 3000
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.use(cors()) 
-app.use((req,res,next)=>{
-  res.setHeader('access-control-allow-origin','*')
-  res.setHeader('access-control-allow-methods','*')
-  res.setHeader('access-control-allow-headers','*')
+app.use(cors())
+app.use((req, res, next) => {
+  res.setHeader('access-control-allow-origin', '*')
+  res.setHeader('access-control-allow-methods', '*')
+  res.setHeader('access-control-allow-headers', '*')
   next()
 })
 
