@@ -1,7 +1,7 @@
-import 'dotenv/config';
+import 'dotenv/config'
 
 const CONFIG = {
-    db: process.env.DB as string | undefined
-};
+  db: process.env.DB as string | undefined
+}
 
-export default CONFIG;
+export default CONFIG
