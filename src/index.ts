@@ -4,7 +4,7 @@ import { logger } from './utils/logger'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 
-import connectDB from './utils/connectDB'
+import './utils/connectDB'
 
 const app = express()
 const port: number = 3000
@@ -22,7 +22,6 @@ app.use((req, res, next) => {
 
 routes(app)
 
-app.listen(port, async () => {
-  await connectDB() // Connect to the database before starting the server
+app.listen(port,() => {
   logger.info(`Server is running on port ${port}`)
 })
