@@ -42,6 +42,8 @@
  "yzhang.markdown-all-in-one"
  "ms-python.debugpy"
  "ms-python.python"
+ "dbaeumer.vscode-eslint"
+ "rangav.vscode-thunder-client"
     ];
 
     # Enable previews
@@ -66,7 +68,7 @@
       # Runs when a workspace is first created
       onCreate = {
         # Example: install JS dependencies from NPM
-        # npm-install = "npm install";
+        npm-install = "npm install";
       };
       # Runs when the workspace is (re)started
       onStart = {
