@@ -13,6 +13,7 @@
     pkgs.nodejs_22
     pkgs.nodePackages.nodemon
     pkgs.husky
+    pkgs.pnpm
   ];
 
   # Sets environment variables in the workspace
