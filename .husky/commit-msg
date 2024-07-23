@@ -1,1 +1,2 @@
-echo "Automated commit message"
+#!/bin/sh
+echo 'uploading'
