@@ -4,7 +4,7 @@ import { createProductValidation } from '../validations/product.validation'
 import { addProductToDB, getProductFromDB } from '../services/product.service'
 import { v4 as uuidv4 } from 'uuid'
 import ProductInterface from '../types/product.type'
-
+//
 export const createProduct = async (req: Request, res: Response) => {
   req.body.product_id = uuidv4()
   const { error, value } = createProductValidation(req.body)
