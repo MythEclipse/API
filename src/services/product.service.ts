@@ -3,8 +3,7 @@ import productModel from '../models/product.model'
 import ProductInterface from '../types/product.type'
 
 export const addProductToDB = async (payload: ProductInterface) => {
-  return await productModel
-    .create(payload)
+  return await productModel.create(payload)
 }
 
 export const getProductFromDB = async () => {

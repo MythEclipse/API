@@ -2,11 +2,11 @@ import { Request, Response } from 'express'
 import { logger } from '../utils/logger'
 import { createProductValidation } from '../validations/product.validation'
 import { addProductToDB, getProductFromDB } from '../services/product.service'
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import ProductInterface from '../types/product.type'
 
 export const createProduct = async (req: Request, res: Response) => {
-  req.body.product_id=uuidv4()
+  req.body.product_id = uuidv4()
   const { error, value } = createProductValidation(req.body)
   if (error) {
     logger.error('ERROR = product create', error.details[0].message)
@@ -15,12 +15,11 @@ export const createProduct = async (req: Request, res: Response) => {
   try {
     await addProductToDB(value)
     logger.info('success post product')
-    return res.status(201).send({ status: true, statusCode: 200, message: 'Add product success'})
+    return res.status(201).send({ status: true, statusCode: 200, message: 'Add product success' })
   } catch (error) {
     logger.error('ERROR = product create', error)
-    return res.status(422).send({ status: false, statusCode: 422, message: 'Add product failed'})
+    return res.status(422).send({ status: false, statusCode: 422, message: 'Add product failed' })
   }
-
 }
 
 export const getProduct = async (req: Request, res: Response) => {
