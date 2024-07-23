@@ -12,6 +12,7 @@
     pkgs.python311Packages.pip
     pkgs.nodejs_22
     pkgs.nodePackages.nodemon
+    pkgs.husky
   ];
 
   # Sets environment variables in the workspace

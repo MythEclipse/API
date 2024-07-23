@@ -21,13 +21,13 @@ export const createProduct = (req: Request, res: Response) => {
 }
 
 export const getProduct = async (req: Request, res: Response) => {
-  const products : any = await getProductFromDB()
+  const products: any = await getProductFromDB()
   const {
     params: { name }
   } = req
 
   if (name) {
-    const filterProduct = products.filter((product : ProductType) => {
+    const filterProduct = products.filter((product: ProductType) => {
       if (product.name === name) {
         return product
       }
