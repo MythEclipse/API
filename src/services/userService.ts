@@ -1,40 +1,48 @@
 import { Database } from 'sqlite3';
+import dotenv from 'dotenv';
+import logger from '../utils/logger';
 import { User } from '../types/userTypes';
 
+dotenv.config();
+
 export class UserService {
-    private db: Database;
+    private static db: Database | null;
 
     constructor() {
-        this.db = new Database('./database.sqlite', (err) => {
-            if (err) {
-                console.error('Failed to connect to the database', err);
-            } else {
-                console.log('Connected to the SQLite database');
-                this.initializeDatabase();
-            }
-        });
+        if (!UserService.db) {
+            UserService.db = this.initializeDatabase();
+        }
     }
 
-    private initializeDatabase() {
-        const createTableQuery = `
-            CREATE TABLE IF NOT EXISTS users (
+    private initializeDatabase(): Database {
+        const db = process.env.NODE_ENV === 'development'
+            ? new Database(':memory:')
+            : new Database('./database.sqlite');
+
+        logger.info(process.env.NODE_ENV === 'development'
+            ? 'Using in-memory SQLite database'
+            : 'Using file-based SQLite database: database.sqlite');
+
+        db.serialize(() => {
+            db.run(`CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 email TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL
-            )
-        `;
-        this.db.run(createTableQuery, (err) => {
-            if (err) {
-                console.error('Failed to create users table', err);
-            }
+            )`);
         });
+
+        return db;
     }
 
     findUser(userId: number): Promise<User | undefined> {
         return new Promise((resolve, reject) => {
+            if (!UserService.db) {
+                reject(new Error('Database not initialized'));
+                return;
+            }
             const query = 'SELECT * FROM users WHERE id = ?';
-            this.db.get(query, [userId], (err, row) => {
+            UserService.db.get(query, [userId], (err, row) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -46,8 +54,12 @@ export class UserService {
 
     saveUser(user: User): Promise<void> {
         return new Promise((resolve, reject) => {
+            if (!UserService.db) {
+                reject(new Error('Database not initialized'));
+                return;
+            }
             const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
-            this.db.run(query, [user.name, user.email, user.password], function (err) {
+            UserService.db.run(query, [user.name, user.email, user.password], function (err) {
                 if (err) {
                     reject(err);
                 } else {
@@ -60,8 +72,12 @@ export class UserService {
 
     updateUser(userId: number, userData: Partial<User>): Promise<void> {
         return new Promise((resolve, reject) => {
+            if (!UserService.db) {
+                reject(new Error('Database not initialized'));
+                return;
+            }
             const query = 'UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?';
-            this.db.run(query, [userData.name, userData.email, userData.password, userId], (err) => {
+            UserService.db.run(query, [userData.name, userData.email, userData.password, userId], (err) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -73,8 +89,12 @@ export class UserService {
 
     deleteUser(userId: number): Promise<void> {
         return new Promise((resolve, reject) => {
+            if (!UserService.db) {
+                reject(new Error('Database not initialized'));
+                return;
+            }
             const query = 'DELETE FROM users WHERE id = ?';
-            this.db.run(query, [userId], (err) => {
+            UserService.db.run(query, [userId], (err) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -83,4 +103,22 @@ export class UserService {
             });
         });
     }
+    closeDatabase(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            if (UserService.db) {
+                UserService.db.close((err) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        UserService.db = null;
+                        logger.info('Database connection closed');
+                        resolve();
+                    }
+                });
+            } else {
+                resolve();
+            }
+        });
+    }
+    
 }

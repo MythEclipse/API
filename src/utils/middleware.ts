@@ -1,16 +1,23 @@
 import { Request, Response, NextFunction } from 'express';
-import db from './setupDatabase';
+import logger from './logger';
 
-export const checkDatabase = (req: Request, res: Response, next: NextFunction) => {
-    db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='users'", (err, row) => {
-        if (err) {
-            return res.status(500).json({ error: 'Database error' });
-        }
-        
-        if (!row) {
-            return res.status(500).json({ error: 'Database tables not initialized' });
-        }
-        
-        next();
-    });
+// Middleware function to log IP and request details
+export const requestLogger = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const ip = req.ip || req.socket.remoteAddress || 'unknown';
+
+  logger.info(
+    {
+      ip,
+      method: req.method,
+      path: req.path,
+      timestamp: new Date().toISOString(),
+    },
+    `Incoming request from IP: ${ip}`
+  );
+
+  next();
 };
