@@ -1,4 +1,4 @@
-import { Database } from 'sqlite3';
+import sqlite3 from 'sqlite3';
 import dotenv from 'dotenv';
 import logger from '../utils/logger';
 import { User } from '../types/userTypes';
@@ -6,7 +6,7 @@ import { User } from '../types/userTypes';
 dotenv.config();
 
 export class UserService {
-    private static db: Database | null;
+    private static db: sqlite3.Database | null;
 
     constructor() {
         if (!UserService.db) {
@@ -14,10 +14,10 @@ export class UserService {
         }
     }
 
-    private initializeDatabase(): Database {
+    private initializeDatabase(): sqlite3.Database {
         const db = process.env.NODE_ENV === 'development'
-            ? new Database(':memory:')
-            : new Database('./database.sqlite');
+            ? new sqlite3.Database(':memory:')
+            : new sqlite3.Database('./database.sqlite');
 
         logger.info(process.env.NODE_ENV === 'development'
             ? 'Using in-memory SQLite database'

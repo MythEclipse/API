@@ -8,7 +8,7 @@
     "test": "cross-env NODE_ENV=development jest",
     "start": "node build/index.js",
     "build": "tsc",
-    "dev": "cross-env NODE_ENV=development nodemon --watch src --exec ts-node src/index.ts",
+    "dev": "cross-env NODE_ENV=development tsx src/index.ts",
     "format": "prettier --write .",
     "lint": "eslint . --fix",
     "check-types": "tsc --noEmit",
@@ -29,6 +29,7 @@
     "@types/ws": "^8.5.13",
     "@typescript-eslint/eslint-plugin": "^8.20.0",
     "@typescript-eslint/parser": "^8.20.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.18.0",
     "eslint-config-love": "^117.0.0",
     "eslint-config-prettier": "^10.0.1",
@@ -41,6 +42,7 @@
     "pretty-quick": "^4.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {
@@ -50,7 +52,6 @@
     "express": "^5.0.1",
     "joi": "^17.13.3",
     "moment": "^2.30.1",
-    "nodemon": "^3.1.9",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0",
     "sqlite3": "^5.1.7",

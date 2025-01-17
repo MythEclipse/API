@@ -2,6 +2,8 @@ import express from 'express';
 import http from 'http';
 import dotenv from 'dotenv';
 import { initWebSocketServer } from './services/websocketService';
+import { setUserRoutes } from './routes/userRoutes';
+import { setChatRoutes } from './routes/chatRoutes';
 import logger from './utils/logger';
 
 dotenv.config();
@@ -10,35 +12,13 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (_, res) => {
-  res.send(`
-    <html>
-      <body>
-        <script>
-          const ws = new WebSocket('ws://' + window.location.host);
-          ws.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            const div = document.createElement('div');
-            div.textContent = message.user + ': ' + message.text;
-            document.body.appendChild(div);
-          };
+// Configure Express middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-          document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-              const input = document.querySelector('input');
-              if (input && input.value.trim()) {
-                ws.send(input.value);
-                input.value = '';
-              }
-            }
-          });
-
-          document.body.innerHTML = '<input placeholder="Type a message...">';
-        </script>
-      </body>
-    </html>
-  `);
-});
+// Set up routes
+setUserRoutes(app);
+setChatRoutes(app);
 
 // Initialize WebSocket server
 initWebSocketServer(server);
@@ -46,4 +26,5 @@ initWebSocketServer(server);
 // Start HTTP server
 server.listen(PORT, () => {
   logger.info(`Server running at http://localhost:${PORT}`);
+  logger.info(`WebSocket server is running`);
 });

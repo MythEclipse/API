@@ -12,12 +12,16 @@
     "outDir": "./build",
     "sourceMap": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-    "lib": ["es6", "dom"]
+    "lib": ["ESNext", "DOM"],
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", "build", "dist"]
 }

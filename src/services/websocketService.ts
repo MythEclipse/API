@@ -1,10 +1,10 @@
 import { Server as HTTPServer } from 'http';
-import { WebSocketServer } from 'ws';
-import { handleConnection } from '../controllers/chatController';
+import WebSocket from 'ws';
+import handleConnection from '../controllers/chatController';
 import logger from '../utils/logger';
 
 export const initWebSocketServer = (server: HTTPServer) => {
-  const wss = new WebSocketServer({ server });
+  const wss = new WebSocket.Server({ server });
 
   wss.on('connection', (ws) => {
     handleConnection(ws);
