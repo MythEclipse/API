@@ -1,13 +1,13 @@
-import pino from 'pino'
-import pretty from 'pino-pretty'
-import moment from 'moment'
+import pino from 'pino';
 
-export const logger = pino(
-  {
-    base: {
-      pid: false
+const logger = pino({
+  transport: {
+    target: 'pino-pretty',
+    options: {
+      colorize: true,
     },
-    timestamp: () => `,"time":"${moment().format()}"`
   },
-  pretty()
-)
+  level: 'info',
+});
+
+export default logger;

@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*"]
     },
-    "typeRoots": ["./src/types", "node_modules/@types"],
+    "typeRoots": ["./src/types", "./node_modules/@types"],
     "resolveJsonModule": true,
     "outDir": "./build",
     "sourceMap": true,
@@ -15,7 +15,8 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["es6", "dom"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

@@ -1,2 +1,8 @@
 #!/bin/sh
 echo "uploading" > $1
+
+COMMIT_MSG=$(cat $1)
+if ! grep -qE "^(feat|fix|docs|style|refactor|test|chore): .{1,50}" <<< "$COMMIT_MSG"; then
+  echo "Commit message format is invalid. Please use 'type: description' format."
+  exit 1
+fi
