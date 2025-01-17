@@ -6,6 +6,8 @@ import { Request, Response } from 'express';
 import { initWebSocketServer } from '../src/services/websocketService';
 import logger from '../src/utils/logger';
 import WebSocket from 'ws';
+import { UserService } from '../src/services/userService';
+import { User } from '../src/types/userTypes';
 
 describe('index.ts tests', () => {
     let server: http.Server;
@@ -100,5 +102,47 @@ describe('index.ts tests', () => {
                 wsClient1.send('Hello from client1');
             });
         });
+    });
+});
+
+describe('UserService tests', () => {
+    let userService: UserService;
+
+    beforeAll(() => {
+        userService = new UserService();
+    });
+
+    it('should save a new user', async () => {
+        const user: User = { id: '', name: 'John Doe', email: 'john@example.com', password: 'password123' };
+        await userService.saveUser(user);
+        const savedUser = await userService.findUser(parseInt(user.id, 10));
+        expect(savedUser).toBeDefined();
+        expect(savedUser?.name).toBe('John Doe');
+    });
+
+    it('should find an existing user', async () => {
+        const user: User = { id: '', name: 'Jane Doe', email: 'jane@example.com', password: 'password123' };
+        await userService.saveUser(user);
+        const foundUser = await userService.findUser(parseInt(user.id, 10));
+        expect(foundUser).toBeDefined();
+        expect(foundUser?.email).toBe('jane@example.com');
+    });
+
+    it('should update an existing user', async () => {
+        const user: User = { id: '', name: 'Jake Doe', email: 'jake@example.com', password: 'password123' };
+        await userService.saveUser(user);
+        const updatedData = { name: 'Jake Smith', email: 'jake.smith@example.com', password: 'newpassword123' };
+        await userService.updateUser(parseInt(user.id, 10), updatedData);
+        const updatedUser = await userService.findUser(parseInt(user.id, 10));
+        expect(updatedUser).toBeDefined();
+        expect(updatedUser?.name).toBe('Jake Smith');
+    });
+
+    it('should delete an existing user', async () => {
+        const user: User = { id: '', name: 'Jill Doe', email: 'jill@example.com', password: 'password123' };
+        await userService.saveUser(user);
+        await userService.deleteUser(parseInt(user.id, 10));
+        const deletedUser = await userService.findUser(parseInt(user.id, 10));
+        expect(deletedUser).toBeUndefined();
     });
 });

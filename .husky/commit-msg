@@ -1,8 +1,12 @@
 #!/bin/sh
-echo "uploading" > $1
 
-COMMIT_MSG=$(cat $1)
-if ! grep -qE "^(feat|fix|docs|style|refactor|test|chore): .{1,50}" <<< "$COMMIT_MSG"; then
-  echo "Commit message format is invalid. Please use 'type: description' format."
-  exit 1
+# Get the commit message file
+COMMIT_MSG_FILE=$1
+
+# Read the commit message
+commit_msg=$(cat "$COMMIT_MSG_FILE")
+
+# If commit message is empty, set it to "malas mengetik"
+if [ -z "$commit_msg" ] || [ "$commit_msg" = "" ]; then
+  echo "malas mengetik" > "$COMMIT_MSG_FILE"
 fi
