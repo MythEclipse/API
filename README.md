@@ -1,73 +1,49 @@
-# Express API Starter Project
+# Express Asepharyana Cloud
 
-A starter project for building REST APIs using Express.js and TypeScript.
+A Node.js/Express.js-based RESTful API project with TypeScript support.
 
 ## Features
 
-- Modern JavaScript (ES6+) and TypeScript support
-- Environment configuration using dotenv
-- RESTful API architecture
-- Jest testing setup
-- ESLint + Prettier code formatting
-- Husky pre-commit hooks
-- Nodemon for development
-- Production-ready configuration
+- Express.js with TypeScript
+- Testing with Jest
+- Code formatting with Prettier
+- Linting with ESLint
+- WebSocket support
+- SQLite database integration
+- Input validation with Joi
+- Logging with Pino
+- CORS enabled
+- Environment variables support
 
-## Requirements
+## Prerequisites
 
-- Node.js 16+
-- pnpm package manager
+- Node.js (Latest LTS version recommended)
+- pnpm
 
 ## Installation
 
 ```bash
-# Clone the repository
-git clone <repository-url>
-
-# Install dependencies
 pnpm install
 ```
 
-## Configuration
+## Scripts
 
-Create a `.env` file in the root directory and add the required environment variables:
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm test` - Run tests
+- `pnpm lint` - Run ESLint
+- `pnpm format` - Format code with Prettier
+- `pnpm check-types` - Check TypeScript types
+- `pnpm check-format` - Check code formatting
+- `pnpm check-lint` - Check ESLint rules
 
-```env
-PORT=3000
-```
+## Development
 
-## Usage
-
-```bash
-# Development mode
-pnpm run dev
-
-# Build project
-pnpm run build
-
-# Run tests
-pnpm run test
-
-# Start production server
-pnpm start
-```
-
-## Project Structure
-
-```
-src/
-    ├── config/       # Configuration files
-    ├── controllers/  # Route controllers
-    ├── routes/       # API routes
-    ├── services/     # Business logic
-    ├── types/        # TypeScript types/interfaces
-    ├── utils/        # Utility functions
-    └── index.ts      # App entry point
-```
-
-## API Documentation
-
-The API endpoints and documentation will be available at `/api/docs` when running the server.
+1. Clone the repository
+2. Install dependencies: `pnpm install`
+3. Create a `.env` file based on `.env.example`
+4. Run development server: `pnpm dev`
 
 ## License
 
