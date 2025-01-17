@@ -44,7 +44,3 @@ pnpm install
 2. Install dependencies: `pnpm install`
 3. Create a `.env` file based on `.env.example`
 4. Run development server: `pnpm dev`
-
-## License
-
-ISC
