@@ -12,7 +12,10 @@ export class ChatService {
     }
 
     private initializeDatabase(): sqlite3.Database {
-        const db = new sqlite3.Database('./chatDatabase.sqlite');
+        const db = process.env.NODE_ENV === 'development'
+            ? new sqlite3.Database(':memory:')
+            : new sqlite3.Database('./database.sqlite');
+
         db.serialize(() => {
             db.run(`CREATE TABLE IF NOT EXISTS messages (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,6 +24,7 @@ export class ChatService {
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
             )`);
         });
+
         return db;
     }
 
